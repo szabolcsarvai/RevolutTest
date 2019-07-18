@@ -1,10 +1,7 @@
 package com.szabolcs.revoluttest
 
 import android.app.Application
-import com.szabolcs.revoluttest.data.di.featureModule
-import com.szabolcs.revoluttest.data.di.interactorModule
-import com.szabolcs.revoluttest.data.di.networkingModule
-import com.szabolcs.revoluttest.data.di.repositoryModule
+import com.szabolcs.revoluttest.data.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -22,7 +19,8 @@ class RevolutTestApplication : Application() {
                     featureModule,
                     interactorModule,
                     repositoryModule,
-                    networkingModule
+                    networkingModule,
+                    wrapperModule
                 )
             )
         }

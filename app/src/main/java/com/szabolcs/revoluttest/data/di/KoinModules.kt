@@ -5,6 +5,8 @@ import com.szabolcs.revoluttest.data.interactor.CurrenciesInteractor
 import com.szabolcs.revoluttest.data.networking.NetworkingManager
 import com.szabolcs.revoluttest.data.repository.CurrenciesRepositoryImpl
 import com.szabolcs.revoluttest.feature.MainViewModel
+import com.szabolcs.revoluttest.utils.ResourceWrapper
+import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,5 +24,9 @@ val repositoryModule = module {
 
 val networkingModule = module {
     single { GsonBuilder().create() }
-    factory { NetworkingManager(get()) }
+    factory { NetworkingManager(get(), get()) }
+}
+
+val wrapperModule = module {
+    single { ResourceWrapper(androidContext()) }
 }
