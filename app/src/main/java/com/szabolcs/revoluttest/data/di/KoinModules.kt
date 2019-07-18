@@ -1,11 +1,12 @@
 package com.szabolcs.revoluttest.data.di
 
+import com.google.gson.GsonBuilder
 import com.szabolcs.revoluttest.data.interactor.CurrenciesInteractor
+import com.szabolcs.revoluttest.data.networking.NetworkingManager
 import com.szabolcs.revoluttest.data.repository.CurrenciesRepositoryImpl
 import com.szabolcs.revoluttest.feature.MainViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-
 
 val featureModule = module {
     viewModel { MainViewModel(get()) }
@@ -16,5 +17,10 @@ val interactorModule = module {
 }
 
 val repositoryModule = module {
-    single { CurrenciesRepositoryImpl() }
+    single { CurrenciesRepositoryImpl(get()) }
+}
+
+val networkingModule = module {
+    single { GsonBuilder().create() }
+    factory { NetworkingManager(get()) }
 }

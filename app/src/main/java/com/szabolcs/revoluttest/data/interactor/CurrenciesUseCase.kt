@@ -1,11 +1,10 @@
 package com.szabolcs.revoluttest.data.interactor
 
 import androidx.lifecycle.LiveData
-import com.szabolcs.revoluttest.data.model.CurrenciesResponse
-import com.szabolcs.revoluttest.data.model.CurrencyDataState
-import com.szabolcs.revoluttest.feature.CurrencyViewModel
+import com.szabolcs.revoluttest.data.model.CurrenciesResultState
 
 interface CurrenciesUseCase {
 
-    fun getCurrencies(base: String): LiveData<CurrencyDataState<CurrencyViewModel>>
+    fun getCurrencies(base: String): LiveData<CurrenciesResultState>
+
 }

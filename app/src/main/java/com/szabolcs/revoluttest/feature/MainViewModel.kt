@@ -9,7 +9,7 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
 
     fun getCurrencies(lifecycleOwner: LifecycleOwner) {
         currenciesInteractor.getCurrencies("EUR").observe(lifecycleOwner, Observer {
-            // TODO Update the adapter, handle loading, handle error
+
         })
     }
 }

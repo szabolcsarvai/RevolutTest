@@ -33,4 +33,9 @@ dependencies {
 
     // DI
     implementation 'org.koin:koin-android-viewmodel:2.0.1'
+
+    // Networking
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
 }

@@ -13,9 +13,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        DataBindingUtil.setContentView<MainBinding>(this, R.layout.activity_main).also {
+        val binding = DataBindingUtil.setContentView<MainBinding>(this, R.layout.activity_main).also {
             it.viewModel = viewModel
             it.lifecycleOwner = this
+        }
+        binding.currencies.setOnClickListener {
+            viewModel.getCurrencies(this)
         }
     }
 }
