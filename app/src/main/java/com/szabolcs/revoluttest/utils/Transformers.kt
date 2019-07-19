@@ -2,7 +2,7 @@ package com.szabolcs.revoluttest.utils
 
 import com.szabolcs.revoluttest.data.model.CurrenciesResponseState
 import com.szabolcs.revoluttest.data.model.CurrenciesResultState
-import com.szabolcs.revoluttest.feature.CurrencyViewModel
+import com.szabolcs.revoluttest.feature.main.CurrencyViewModel
 
 val transformResponse: (CurrenciesResponseState) -> CurrenciesResultState = {
     CurrenciesResultState(

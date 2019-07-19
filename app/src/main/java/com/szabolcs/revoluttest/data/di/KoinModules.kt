@@ -4,7 +4,7 @@ import com.google.gson.GsonBuilder
 import com.szabolcs.revoluttest.data.interactor.CurrenciesInteractor
 import com.szabolcs.revoluttest.data.networking.NetworkingManager
 import com.szabolcs.revoluttest.data.repository.CurrenciesRepositoryImpl
-import com.szabolcs.revoluttest.feature.MainViewModel
+import com.szabolcs.revoluttest.feature.main.MainViewModel
 import com.szabolcs.revoluttest.utils.ResourceWrapper
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.viewmodel.dsl.viewModel

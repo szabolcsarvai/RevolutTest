@@ -1,4 +1,4 @@
-package com.szabolcs.revoluttest.feature
+package com.szabolcs.revoluttest.feature.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,21 +12,26 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModel<MainViewModel>()
+    private val adapter = CurrencyAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding = DataBindingUtil.setContentView<MainBinding>(this, R.layout.activity_main).also {
             it.viewModel = viewModel
             it.lifecycleOwner = this
+            it.recyclerView.adapter = adapter
         }
 
-        viewModel.snackbarMessage.observe(this, Observer {errorMessage->
+        viewModel.currencies.observe(this, Observer {
+            adapter.updateItems(it)
+        })
+
+        viewModel.snackbarMessage.observe(this, Observer { errorMessage ->
             errorMessage?.let {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             }
         })
-        binding.currencies.setOnClickListener {
-            viewModel.getCurrencies(this)
-        }
+
+        viewModel.getCurrencies(this)
     }
 }

@@ -1,7 +1,7 @@
 package com.szabolcs.revoluttest.data.model
 
 import com.szabolcs.revoluttest.data.networking.ServiceError
-import com.szabolcs.revoluttest.feature.CurrencyViewModel
+import com.szabolcs.revoluttest.feature.main.CurrencyViewModel
 
 class CurrenciesResultState(
     val selectedCurrency: String? = null,
