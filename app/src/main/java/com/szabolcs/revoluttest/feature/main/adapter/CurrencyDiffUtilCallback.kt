@@ -1,4 +1,4 @@
-package com.szabolcs.revoluttest.feature.main
+package com.szabolcs.revoluttest.feature.main.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 
@@ -11,8 +11,7 @@ class CurrencyDiffUtilCallback(
         oldList[oldItemPosition].currency == newList[newItemPosition].currency
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean =
-        oldList[oldItemPosition].currency == newList[newItemPosition].currency &&
-                oldList[oldItemPosition].rate == newList[newItemPosition].rate
+        oldList[oldItemPosition].currency == newList[newItemPosition].currency
 
     override fun getOldListSize() = oldList.size
 

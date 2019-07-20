@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.szabolcs.revoluttest.data.interactor.CurrenciesInteractor
+import com.szabolcs.revoluttest.feature.main.adapter.CurrencyViewModel
+import com.szabolcs.revoluttest.feature.main.adapter.VM2
 
 class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : ViewModel() {
 
@@ -18,7 +20,14 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
                 return@Observer
             }
             value.currencies?.let {
-                currencies.value = it
+                val list = mutableListOf<CurrencyViewModel>()
+                value.selectedCurrency?.let {
+                    val selectedViewModel = VM2(value.selectedCurrency)
+                    list.add(selectedViewModel)
+
+                }
+                list.addAll(it)
+                currencies.value = list
             }
         })
     }
