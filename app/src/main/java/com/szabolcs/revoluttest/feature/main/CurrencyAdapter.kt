@@ -8,19 +8,36 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
 
     private var itemViewModels = mutableListOf<CurrencyViewModel>()
 
-    var itemClickListener: ItemClickListener? = null
+    var currencyItemSelectedListener = object : CurrencyItemSelectedListener {
+        override fun onItemSelected(position: Int) {
+            switchItems(position)
+        }
+    }
+
+   private fun switchItems(pos: Int) {
+        val firstItem = itemViewModels[0]
+        firstItem.currencyChangeListener = null
+        firstItem.isSelected.set(false)
+        val selectedItem = itemViewModels[pos]
+        selectedItem.currencyChangeListener = this
+        selectedItem.isSelected.set(true)
+        itemViewModels[0] = selectedItem
+        itemViewModels[pos] = firstItem
+        notifyItemChanged(0)
+        notifyItemChanged(pos)
+    }
 
     fun updateItems(newItems: List<CurrencyViewModel>) {
         newItems[0].currencyChangeListener = this
 
         val diffUtil = DiffUtil.calculateDiff(CurrencyDiffUtilCallback(itemViewModels, newItems))
+        diffUtil.dispatchUpdatesTo(this)
         itemViewModels.clear()
         itemViewModels.addAll(newItems)
-        diffUtil.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        CurrencyViewHolder.create(parent, itemClickListener)
+        CurrencyViewHolder.create(parent, currencyItemSelectedListener)
 
     override fun getItemCount() = itemViewModels.size
 
@@ -28,9 +45,9 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
         holder.bind(itemViewModels[position])
     }
 
-    override fun onValueChanged(newValue: Float) {
+    override fun onValueChanged(newValue: Float, selectedCurrencyRate: Float) {
         for (itemViewModel in itemViewModels) {
-            itemViewModel.setSelectedCurrency(newValue)
+            itemViewModel.setSelectedCurrency(newValue, selectedCurrencyRate)
         }
     }
 }

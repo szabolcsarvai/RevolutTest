@@ -11,8 +11,8 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
     val snackbarMessage = MutableLiveData<String>()
     val currencies = MutableLiveData<List<CurrencyViewModel>>()
 
-    fun getCurrencies(lifecycleOwner: LifecycleOwner) {
-        currenciesInteractor.getCurrencies(DEFAULT_CURRENCY).observe(lifecycleOwner, Observer { value ->
+    fun getCurrencies(lifecycleOwner: LifecycleOwner, currency: String = DEFAULT_CURRENCY) {
+        currenciesInteractor.getCurrencies(currency).observe(lifecycleOwner, Observer { value ->
             value.error?.let { error ->
                 snackbarMessage.value = error.message
                 return@Observer
@@ -22,9 +22,6 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
                 currencyViewModels.add(CurrencyViewModel(it, DEFAULT_RATE_VALUE, isSelected = true))
             }
             value.currencies?.let {
-                for (currencyViewModel in it) {
-                    currencyViewModel.setSelectedCurrency(DEFAULT_RATE_VALUE)
-                }
                 currencyViewModels.addAll(it)
             }
             currencies.value = currencyViewModels
@@ -33,6 +30,6 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
 
     companion object{
         private const val DEFAULT_CURRENCY = "EUR"
-        private const val DEFAULT_RATE_VALUE = 100f
+        private const val DEFAULT_RATE_VALUE = 1f
     }
 }
