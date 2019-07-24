@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.szabolcs.revoluttest.MainBinding
 import com.szabolcs.revoluttest.R
+import com.szabolcs.revoluttest.feature.main.adapter.CurrencyAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {

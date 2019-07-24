@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.szabolcs.revoluttest.data.interactor.CurrenciesInteractor
+import com.szabolcs.revoluttest.feature.main.adapter.CurrencyViewModel
 import java.math.BigDecimal
 
 class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : ViewModel() {

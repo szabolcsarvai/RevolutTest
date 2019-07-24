@@ -1,4 +1,4 @@
-package com.szabolcs.revoluttest.feature.main
+package com.szabolcs.revoluttest.feature.main.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

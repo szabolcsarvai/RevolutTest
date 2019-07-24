@@ -2,7 +2,7 @@ package com.szabolcs.revoluttest.utils
 
 import com.szabolcs.revoluttest.data.model.CurrenciesResponseState
 import com.szabolcs.revoluttest.data.model.CurrenciesResultState
-import com.szabolcs.revoluttest.feature.main.CurrencyViewModel
+import com.szabolcs.revoluttest.feature.main.adapter.CurrencyViewModel
 import java.math.BigDecimal
 
 val transformResponse: (CurrenciesResponseState) -> CurrenciesResultState = {

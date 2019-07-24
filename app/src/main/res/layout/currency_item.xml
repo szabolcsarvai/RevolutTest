@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.szabolcs.revoluttest.feature.main.CurrencyViewModel" />
+            type="com.szabolcs.revoluttest.feature.main.adapter.CurrencyViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
