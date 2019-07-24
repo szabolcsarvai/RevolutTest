@@ -1,11 +1,14 @@
 package com.szabolcs.revoluttest.feature.main
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.annotation.SuppressLint
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.szabolcs.revoluttest.CurrencyItemBinding
-import com.szabolcs.revoluttest.R
+import android.view.View.OnTouchListener
+import android.util.Log
+import android.view.*
+import androidx.core.view.MotionEventCompat
+
 
 class CurrencyViewHolder(
     private val binding: CurrencyItemBinding
@@ -16,17 +19,21 @@ class CurrencyViewHolder(
     }
 
     companion object {
+        @SuppressLint("ClickableViewAccessibility")
         fun create(parent: ViewGroup, currencyItemSelectedListener: CurrencyItemSelectedListener?) =
             CurrencyViewHolder(
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
-                    R.layout.currency_item,
+                    com.szabolcs.revoluttest.R.layout.currency_item,
                     parent,
                     false
                 )
             ).also { viewHolder ->
-                viewHolder.binding.value.setOnClickListener {
-                    currencyItemSelectedListener?.onItemSelected(viewHolder.adapterPosition)
+                viewHolder.binding.value.setOnTouchListener { _, event ->
+                    if (event.action == MotionEvent.ACTION_UP) {
+                        currencyItemSelectedListener?.onItemSelected(viewHolder.adapterPosition)
+                    }
+                    false
                 }
             }
     }

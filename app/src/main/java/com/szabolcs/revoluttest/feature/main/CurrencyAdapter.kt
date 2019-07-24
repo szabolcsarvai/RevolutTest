@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
+import java.math.BigDecimal
 
 
 class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValueChangeListener {
@@ -11,7 +12,7 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
     private lateinit var layoutManager: LinearLayoutManager
     private var items = mutableListOf<CurrencyViewModel>()
 
-    var currencyItemSelectedListener = object : CurrencyItemSelectedListener {
+    private var currencyItemSelectedListener = object : CurrencyItemSelectedListener {
         override fun onItemSelected(position: Int) {
             if (position == 0) return
             switchItems(position)
@@ -67,9 +68,11 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
         super.onAttachedToRecyclerView(recyclerView)
     }
 
-    override fun onValueChanged(newValue: Float, selectedCurrencyRate: Float) {
+    override fun onValueChanged(newValue: String, selectedCurrencyRate: BigDecimal) {
         for (itemViewModel in items) {
-            itemViewModel.setSelectedCurrency(newValue, selectedCurrencyRate)
+            if (!itemViewModel.isSelected.get()) {
+                itemViewModel.setSelectedCurrency(newValue, selectedCurrencyRate)
+            }
         }
     }
 }

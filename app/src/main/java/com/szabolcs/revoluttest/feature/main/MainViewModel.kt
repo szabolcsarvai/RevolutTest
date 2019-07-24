@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.szabolcs.revoluttest.data.interactor.CurrenciesInteractor
+import java.math.BigDecimal
 
 class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : ViewModel() {
 
@@ -19,7 +20,7 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
             }
             val currencyViewModels = mutableListOf<CurrencyViewModel>()
             value.selectedCurrency?.let {
-                currencyViewModels.add(CurrencyViewModel(it, DEFAULT_RATE_VALUE, isSelected = true))
+                currencyViewModels.add(CurrencyViewModel(it, BigDecimal(DEFAULT_RATE_VALUE), isSelected = true))
             }
             value.currencies?.let {
                 currencyViewModels.addAll(it)
@@ -30,6 +31,6 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
 
     companion object{
         private const val DEFAULT_CURRENCY = "EUR"
-        private const val DEFAULT_RATE_VALUE = 1f
+        private const val DEFAULT_RATE_VALUE = "1.0"
     }
 }

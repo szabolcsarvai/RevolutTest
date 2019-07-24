@@ -1,5 +1,7 @@
 package com.szabolcs.revoluttest.feature.main
 
+import java.math.BigDecimal
+
 interface CurrencyValueChangeListener {
-    fun onValueChanged(newValue: Float, selectedCurrencyRate: Float)
+    fun onValueChanged(newValue: String, selectedCurrencyRate: BigDecimal)
 }

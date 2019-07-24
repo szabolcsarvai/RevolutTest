@@ -2,29 +2,31 @@ package com.szabolcs.revoluttest.feature.main
 
 import android.text.Editable
 import androidx.databinding.ObservableBoolean
-import androidx.databinding.ObservableFloat
+import androidx.databinding.ObservableField
+import java.math.BigDecimal
+import java.math.RoundingMode
 
-class CurrencyViewModel(val currency: String, val rate: Float, isSelected: Boolean = false) {
+class CurrencyViewModel(val currency: String, val rate: BigDecimal, isSelected: Boolean = false) {
 
     val isSelected = ObservableBoolean(isSelected)
-    val currentRate = ObservableFloat(rate)
+    val currentRate = ObservableField(rate.toString())
 
     var currencyChangeListener: CurrencyValueChangeListener? = null
 
-    fun setSelectedCurrency(newValue: Float, selectedCurrencyRate: Float) {
+    fun setSelectedCurrency(newValue: String, selectedCurrencyRate: BigDecimal) {
         if (isSelected.get()) {
             currentRate.set(newValue)
         } else {
-            currentRate.set(calculateRate(newValue, rate, selectedCurrencyRate))
+            currentRate.set(if (newValue.isEmpty()) "" else calculateRate(BigDecimal(newValue), rate, selectedCurrencyRate))
         }
     }
 
     fun afterTextChanged(s: Editable?) {
         if (isSelected.get()) {
-            currencyChangeListener?.onValueChanged(s.toString().toFloat(), rate)
+            currencyChangeListener?.onValueChanged(s.toString(), rate)
         }
     }
 
-    private fun calculateRate(value: Float, rate: Float, selectedCurrencyRate: Float) =
-        "%.2f".format((value * rate) / selectedCurrencyRate).toFloat()
+    private fun calculateRate(value: BigDecimal, rate: BigDecimal, selectedCurrencyRate: BigDecimal) =
+        ((value * rate) / selectedCurrencyRate).setScale(2, RoundingMode.CEILING).toString()
 }
