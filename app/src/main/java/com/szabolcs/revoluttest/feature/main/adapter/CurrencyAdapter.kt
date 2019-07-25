@@ -19,6 +19,14 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
         }
     }
 
+    fun handleUpdate(newItems: List<CurrencyViewModel>) {
+        if (itemCount == 0) {
+            setItems(newItems)
+        } else {
+            updateItems(newItems)
+        }
+    }
+
     private fun restoreScrollPositionAfterAdAdded() {
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
 
@@ -41,17 +49,26 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
 
         notifyItemMoved(pos, 0)
         notifyItemMoved(1, pos)
-
         restoreScrollPositionAfterAdAdded()
     }
 
-    fun updateItems(newItems: List<CurrencyViewModel>) {
+    private fun setItems(newItems: List<CurrencyViewModel>) {
         newItems[0].currencyChangeListener = this
 
         val diffUtil = DiffUtil.calculateDiff(CurrencyDiffUtilCallback(items, newItems))
         diffUtil.dispatchUpdatesTo(this)
         items.clear()
         items.addAll(newItems)
+    }
+
+    private fun updateItems(newItems: List<CurrencyViewModel>) {
+        for (item in items) {
+            for (newItem in newItems) {
+                if (!item.isSelected.get() && item.currency == newItem.currency) {
+                    item.updateRate(newItem.rate)
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.currencies.observe(this, Observer {
-            adapter.updateItems(it)
+            adapter.handleUpdate(it)
         })
 
         viewModel.snackbarMessage.observe(this, Observer { errorMessage ->

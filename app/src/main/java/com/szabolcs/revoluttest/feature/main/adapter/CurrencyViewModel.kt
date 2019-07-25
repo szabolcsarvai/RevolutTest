@@ -6,14 +6,24 @@ import androidx.databinding.ObservableField
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class CurrencyViewModel(val currency: String, val rate: BigDecimal, isSelected: Boolean = false) {
+class CurrencyViewModel(val currency: String, var rate: BigDecimal, isSelected: Boolean = false) {
+
+    var currencyChangeListener: CurrencyValueChangeListener? = null
+    private var selectedCurrencyRate = BigDecimal("1")
+    private var selectedCurrencyValue = "1"
 
     val isSelected = ObservableBoolean(isSelected)
     val currentRate = ObservableField(rate.toString())
 
-    var currencyChangeListener: CurrencyValueChangeListener? = null
+    fun updateRate(newRate: BigDecimal) {
+        rate = newRate
+        setSelectedCurrency(selectedCurrencyValue, selectedCurrencyRate)
+    }
 
     fun setSelectedCurrency(newValue: String, selectedCurrencyRate: BigDecimal) {
+        selectedCurrencyValue = newValue
+        this.selectedCurrencyRate = selectedCurrencyRate
+
         if (isSelected.get()) {
             currentRate.set(newValue)
         } else {
@@ -24,6 +34,10 @@ class CurrencyViewModel(val currency: String, val rate: BigDecimal, isSelected: 
     fun afterTextChanged(s: Editable?) {
         if (isSelected.get()) {
             currencyChangeListener?.onValueChanged(s.toString(), rate)
+            if(!s.isNullOrEmpty()) {
+                selectedCurrencyValue = s.toString()
+                currentRate.set(s.toString())
+            }
         }
     }
 
