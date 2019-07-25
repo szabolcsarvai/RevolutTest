@@ -33,6 +33,21 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.getCurrencies(this)
+        viewModel.startLoading(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.cancelTimer()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResume()
     }
 }
