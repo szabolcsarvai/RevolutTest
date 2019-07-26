@@ -3,12 +3,14 @@ package com.szabolcs.revoluttest.data.networking
 import com.google.gson.Gson
 import com.szabolcs.revoluttest.utils.ResourceWrapper
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 class NetworkingManager(gson: Gson, resourceWrapper: ResourceWrapper) {
 
     private val okHttpClient = OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         .addInterceptor(ErrorInterceptor(resourceWrapper, gson))
         .build()
 

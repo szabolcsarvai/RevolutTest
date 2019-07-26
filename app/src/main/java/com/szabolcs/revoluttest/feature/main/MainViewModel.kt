@@ -16,15 +16,21 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
     val currencies = MutableLiveData<List<CurrencyViewModel>>()
     private var coroutineTimer: Job? = null
     private var shouldLoad = true
+    var selectedCurrency = DEFAULT_CURRENCY
 
     fun startLoading(lifecycleOwner: LifecycleOwner) {
         startCoroutine { getCurrencies(lifecycleOwner) }
     }
 
+    fun getCurrencies(lifecycleOwner: LifecycleOwner, selectedCurrency: String){
+        this.selectedCurrency = selectedCurrency
+        getCurrencies(lifecycleOwner)
+    }
+
     private fun getCurrencies(lifecycleOwner: LifecycleOwner) {
         if (shouldLoad) {
             CoroutineScope(Dispatchers.Main).launch {
-                currenciesInteractor.getCurrencies(DEFAULT_CURRENCY)
+                currenciesInteractor.getCurrencies(selectedCurrency)
                     .observe(lifecycleOwner, Observer { response ->
                         handleResponse(response)
                     })

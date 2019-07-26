@@ -8,6 +8,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.szabolcs.revoluttest.MainBinding
 import com.szabolcs.revoluttest.R
 import com.szabolcs.revoluttest.feature.main.adapter.CurrencyAdapter
+import com.szabolcs.revoluttest.feature.main.adapter.CurrencyItemSelectedListener
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +22,14 @@ class MainActivity : AppCompatActivity() {
             it.viewModel = viewModel
             it.lifecycleOwner = this
             it.recyclerView.adapter = adapter
+        }
+
+        adapter.currencyItemSelectedListener = object : CurrencyItemSelectedListener {
+            override fun onItemSelected(position: Int) {
+                if (position == 0) return
+                viewModel.getCurrencies(this@MainActivity, adapter.getItem(position).currency)
+                adapter.switchItems(position)
+            }
         }
 
         viewModel.currencies.observe(this, Observer {

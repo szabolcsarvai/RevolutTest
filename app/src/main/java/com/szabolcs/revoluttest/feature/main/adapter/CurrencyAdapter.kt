@@ -12,12 +12,7 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
     private lateinit var layoutManager: LinearLayoutManager
     private var items = mutableListOf<CurrencyViewModel>()
 
-    private var currencyItemSelectedListener = object : CurrencyItemSelectedListener {
-        override fun onItemSelected(position: Int) {
-            if (position == 0) return
-            switchItems(position)
-        }
-    }
+    var currencyItemSelectedListener: CurrencyItemSelectedListener? = null
 
     fun handleUpdate(newItems: List<CurrencyViewModel>) {
         if (itemCount == 0) {
@@ -35,7 +30,7 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
         }
     }
 
-    private fun switchItems(pos: Int) {
+    fun switchItems(pos: Int) {
         val item1 = items.removeAt(0)
         item1.isSelected.set(false)
         item1.currencyChangeListener = null
@@ -52,6 +47,8 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
         restoreScrollPositionAfterAdAdded()
     }
 
+    fun getItem(position: Int) = items[position]
+
     private fun setItems(newItems: List<CurrencyViewModel>) {
         newItems[0].currencyChangeListener = this
 
@@ -62,10 +59,12 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
     }
 
     private fun updateItems(newItems: List<CurrencyViewModel>) {
+        val selectedItem = items[0]
         for (item in items) {
             for (newItem in newItems) {
-                if (!item.isSelected.get() && item.currency == newItem.currency) {
-                    item.updateRate(newItem.rate)
+                if (item.currency == newItem.currency) {
+                    item.updateRate(newItem.rate, selectedItem.currentRate.get()!!)
+                    break
                 }
             }
         }
@@ -88,7 +87,7 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
     override fun onValueChanged(newValue: String, selectedCurrencyRate: BigDecimal) {
         for (itemViewModel in items) {
             if (!itemViewModel.isSelected.get()) {
-                itemViewModel.setSelectedCurrency(newValue, selectedCurrencyRate)
+                itemViewModel.setSelectedCurrency(newValue)
             }
         }
     }
