@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.szabolcs.revoluttest.data.model.CurrenciesResponseState
 import com.szabolcs.revoluttest.data.networking.NetworkingManager
 import com.szabolcs.revoluttest.data.networking.ServiceError
-import com.szabolcs.revoluttest.enqueueCall
+import com.szabolcs.revoluttest.utils.enqueueCall
 
 class CurrenciesRepositoryImpl(private val networkingManager: NetworkingManager) : CurrenciesRepository {
 

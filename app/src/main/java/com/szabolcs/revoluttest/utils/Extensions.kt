@@ -1,4 +1,4 @@
-package com.szabolcs.revoluttest
+package com.szabolcs.revoluttest.utils
 
 import com.szabolcs.revoluttest.data.networking.ServiceError
 import retrofit2.Call
