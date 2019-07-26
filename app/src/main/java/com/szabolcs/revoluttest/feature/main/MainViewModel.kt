@@ -14,12 +14,14 @@ import java.util.Currency
 class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : ViewModel() {
 
     val snackbarMessage = MutableLiveData<String>()
+    val isLoading = MutableLiveData<Boolean>()
     val currencies = MutableLiveData<List<CurrencyViewModel>>()
     private var coroutineTimer: Job? = null
     private var shouldLoad = true
-    var selectedCurrency = DEFAULT_CURRENCY
+    private var selectedCurrency = DEFAULT_CURRENCY
 
     fun startLoading(lifecycleOwner: LifecycleOwner) {
+        isLoading.value = true
         startCoroutine { getCurrencies(lifecycleOwner) }
     }
 
@@ -62,6 +64,7 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
     }
 
     private fun handleResponse(response: CurrenciesResultState) {
+        isLoading.value = false
         response.error?.let { error ->
             cancelTimer()
             snackbarMessage.value = error.message

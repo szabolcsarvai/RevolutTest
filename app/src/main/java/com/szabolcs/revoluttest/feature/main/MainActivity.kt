@@ -24,6 +24,11 @@ class MainActivity : AppCompatActivity() {
             it.recyclerView.adapter = adapter
         }
 
+        binding.swipeToRefresh.setOnRefreshListener {
+            viewModel.cancelTimer()
+            viewModel.startLoading(this@MainActivity)
+        }
+
         adapter.currencyItemSelectedListener = object : CurrencyItemSelectedListener {
             override fun onItemSelected(position: Int) {
                 if (position == 0) return
@@ -40,6 +45,10 @@ class MainActivity : AppCompatActivity() {
             errorMessage?.let {
                 Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
             }
+        })
+
+        viewModel.isLoading.observe(this, Observer { isLoading ->
+            binding.swipeToRefresh.isRefreshing = isLoading
         })
 
         viewModel.startLoading(this)

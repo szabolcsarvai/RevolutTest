@@ -12,7 +12,6 @@ val transformResponse: (CurrenciesResponseState) -> CurrenciesResultState = {
         currencies = it.currencies?.map { item ->
             CurrencyViewModel(item.key, Currency.getInstance(item.key).displayName, BigDecimal(item.value))
         },
-        isLoading = it.isLoading,
         error = it.error
     )
 }

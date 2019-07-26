@@ -23,7 +23,6 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
 
     private fun restoreScrollPositionAfterAdAdded() {
         val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
-
         if (firstVisibleItemPosition == 0) {
             layoutManager.scrollToPosition(0)
         }
@@ -49,6 +48,7 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
     fun getItem(position: Int) = items[position]
 
     private fun setItems(newItems: List<CurrencyViewModel>) {
+        items.clear()
         items.addAll(newItems)
         if (itemCount != 0) {
             items[0].currencyChangeListener = this

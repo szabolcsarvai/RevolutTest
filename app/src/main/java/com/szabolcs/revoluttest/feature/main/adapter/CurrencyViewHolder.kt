@@ -8,9 +8,7 @@ import android.view.*
 import com.szabolcs.revoluttest.R
 
 
-class CurrencyViewHolder(
-    private val binding: CurrencyItemBinding
-) : RecyclerView.ViewHolder(binding.root) {
+class CurrencyViewHolder(private val binding: CurrencyItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(viewModel: CurrencyViewModel) {
         binding.viewModel = viewModel
