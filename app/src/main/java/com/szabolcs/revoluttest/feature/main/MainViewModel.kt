@@ -9,6 +9,7 @@ import com.szabolcs.revoluttest.data.model.CurrenciesResultState
 import com.szabolcs.revoluttest.feature.main.adapter.CurrencyViewModel
 import kotlinx.coroutines.*
 import java.math.BigDecimal
+import java.util.Currency
 
 class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : ViewModel() {
 
@@ -71,6 +72,7 @@ class MainViewModel(private val currenciesInteractor: CurrenciesInteractor) : Vi
             currencyViewModels.add(
                 CurrencyViewModel(
                     it,
+                    Currency.getInstance(it).displayName,
                     BigDecimal(DEFAULT_RATE_VALUE),
                     isSelected = true
                 )

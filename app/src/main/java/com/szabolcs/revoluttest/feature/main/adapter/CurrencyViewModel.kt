@@ -6,7 +6,7 @@ import androidx.databinding.ObservableField
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-class CurrencyViewModel(val currency: String, var rate: BigDecimal, isSelected: Boolean = false) {
+class CurrencyViewModel(val currency: String, val displayName: String, var rate: BigDecimal,  isSelected: Boolean = false) {
 
     var currencyChangeListener: CurrencyValueChangeListener? = null
 

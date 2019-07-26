@@ -21,11 +21,22 @@
             android:layout_height="wrap_content"
             android:text="@{viewModel.currency}"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/value"
+            android:textColor="@color/colorPrimaryDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="EUR" />
+
+        <TextView
+            android:id="@+id/country"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.displayName}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/value"
+            app:layout_constraintTop_toBottomOf="@+id/currency"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Euro" />
 
         <EditText
             android:id="@+id/value"
@@ -33,6 +44,7 @@
             android:layout_height="wrap_content"
             android:afterTextChanged="@{viewModel::afterTextChanged}"
             android:imeOptions="actionDone"
+            android:textColor="@color/colorPrimaryDark"
             android:inputType="numberDecimal"
             android:text="@{viewModel.currentRate}"
             app:layout_constraintBottom_toBottomOf="parent"
