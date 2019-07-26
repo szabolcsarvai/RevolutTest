@@ -1,7 +1,6 @@
 package com.szabolcs.revoluttest.feature.main.adapter
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import java.math.BigDecimal
@@ -50,12 +49,11 @@ class CurrencyAdapter : RecyclerView.Adapter<CurrencyViewHolder>(), CurrencyValu
     fun getItem(position: Int) = items[position]
 
     private fun setItems(newItems: List<CurrencyViewModel>) {
-        newItems[0].currencyChangeListener = this
-
-        val diffUtil = DiffUtil.calculateDiff(CurrencyDiffUtilCallback(items, newItems))
-        diffUtil.dispatchUpdatesTo(this)
-        items.clear()
         items.addAll(newItems)
+        if (itemCount != 0) {
+            items[0].currencyChangeListener = this
+        }
+        notifyDataSetChanged()
     }
 
     private fun updateItems(newItems: List<CurrencyViewModel>) {
